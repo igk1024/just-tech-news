@@ -1,0 +1,33 @@
+{
+  "name": "newsfeed-api",
+  "version": "1.0.0",
+  "description": "```plaintext\r DB_NAME=''\r DB_USER=''\r DB_PW=''\r ```",
+  "main": "server.js",
+  "scripts": {
+    "test": "jest",
+    "start": "node server.js",
+    "seeds": "node seeds/index.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "bcrypt": "^5.0.0",
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "express-handlebars": "^5.2.0",
+    "mysql2": "^2.2.5",
+    "sequelize": "^5.22.3"
+  },
+  "devDependencies": {
+    "jest": "^25.1.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/igk1024/just-tech-news.git"
+  },
+  "keywords": [],
+  "bugs": {
+    "url": "https://github.com/igk1024/just-tech-news/issues"
+  },
+  "homepage": "https://github.com/igk1024/just-tech-news#readme"
+}
