@@ -4,14 +4,28 @@ const { User, Post, Comment, Vote } = require('../../models');
 // get all users
 router.get('/', (req, res) => {
   User.findAll({
-    attributes: { exclude: ['password'] }
-  })
-    .then(dbUserData => res.json(dbUserData))
-    .catch(err => {
-      console.log(err);
-      res.status(500).json(err);
-    });
+    attributes: { exclude: ['password'] },
+    include: [
+      {
+        model: Post,
+        attributes: ['id', 'title', 'post_url', 'created_at']
+      },
+      {
+        model: Post,
+        attributes: ['title'],
+        through: Vote,
+        as: 'voted_posts'
+      }
+    ]
+})                     
+  .then(dbUserData => res.json(dbUserData))
+  .catch(err => {
+    console.log(err);
+    res.status(500).json(err);
+  });
 });
+
+//----------------------------
 
 router.get('/:id', (req, res) => {
   User.findOne({
@@ -53,6 +67,8 @@ router.get('/:id', (req, res) => {
     });
 });
 
+//----------------------------
+
 router.post('/', (req, res) => {
   // expects {username: 'Lernantino', email: 'lernantino@gmail.com', password: 'password1234'}
   User.create({
@@ -76,7 +92,9 @@ router.post('/', (req, res) => {
     });
 });
 
+//----------------------------
 
+//login route
 router.post('/login', (req, res) => {
   User.findOne({
     where: {
@@ -108,17 +126,7 @@ router.post('/login', (req, res) => {
   });
 });
 
-//so user can log out
-router.post('/logout', (req, res) => {
-  if (req.session.loggedIn) {
-    req.session.destroy(() => {
-      res.status(204).end();
-    });
-  }
-  else {
-    res.status(404).end();
-  }
-});
+
 
 // router.post('/login', (req, res) => {
 //   // expects {email: 'lernantino@gmail.com', password: 'password1234'}
@@ -166,6 +174,22 @@ router.put('/:id', (req, res) => {
     });
 });
 
+//----------------------------
+
+//so user can log out
+router.post('/logout', (req, res) => {
+  if (req.session.loggedIn) {
+    req.session.destroy(() => {
+      res.status(204).end();
+    });
+  }
+  else {
+    res.status(404).end();
+  }
+});
+
+//----------------------------
+
 router.delete('/:id', (req, res) => {
   User.destroy({
     where: {
@@ -184,8 +208,5 @@ router.delete('/:id', (req, res) => {
       res.status(500).json(err);
     });
 });
-
-
-
 
 module.exports = router;
