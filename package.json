@@ -1,7 +1,7 @@
 {
-  "name": "newsfeed-api",
+  "name": "just-tech-news",
   "version": "1.0.0",
-  "description": "```plaintext\r DB_NAME=''\r DB_USER=''\r DB_PW=''\r ```",
+  "description": "",
   "main": "server.js",
   "scripts": {
     "test": "jest",
